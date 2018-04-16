@@ -1,0 +1,91 @@
+{
+    "interactionModel": {
+        "languageModel": {
+            "invocationName": "gt housing",
+            "intents": [
+                {
+                    "name": "ChangeIntent",
+                    "slots": [
+                        {
+                            "name": "temperature",
+                            "type": "AMAZON.NUMBER"
+                        }
+                    ],
+                    "samples": [
+                        "change the temperature to {temperature} degrees",
+                        "set the temperature to {temperature} degrees",
+                        "to go to {temperature} degrees",
+                        "to go to {temperature}",
+                        "set the temperature to {temperature}",
+                        "change the temperature to {temperature}",
+                        "change the thermostat to {temperature}",
+                        "set to {temperature}",
+                        "set the thermostat to {temperature}",
+                        "to turn it to {temperature}",
+                        "to turn it down to {temperature}",
+                        "to turn it up to {temperature}"
+                    ]
+                },
+                {
+                    "name": "StateIntent",
+                    "slots": [],
+                    "samples": [
+                        "what the temperature is",
+                        "what the temperature is set to"
+                    ]
+                },
+                {
+                    "name": "LightsIntent",
+                    "slots": [
+                        {
+                            "name": "power",
+                            "type": "Power"
+                        }
+                    ],
+                    "samples": [
+                        "to turn {power} the lights",
+                        "to turn the lights {power}"
+                    ]
+                },
+                {
+                    "name": "AMAZON.CancelIntent",
+                    "samples": []
+                },
+                {
+                    "name": "AMAZON.HelpIntent",
+                    "samples": [
+                        "for help",
+                        "help"
+                    ]
+                },
+                {
+                    "name": "AMAZON.StopIntent",
+                    "samples": []
+                }
+            ],
+            "types": [
+                {
+                    "name": "Power",
+                    "values": [
+                        {
+                            "name": {
+                                "value": "Off",
+                                "synonyms": [
+                                    "off"
+                                ]
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "On",
+                                "synonyms": [
+                                    "on"
+                                ]
+                            }
+                        }
+                    ]
+                }
+            ]
+        }
+    }
+}
