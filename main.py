@@ -1,5 +1,6 @@
 from __future__ import print_function
 
+temperature = None
 
 def lambda_handler(event, context):
     """ Route the incoming request based on type (LaunchRequest, IntentRequest,
@@ -105,33 +106,38 @@ def changeIntent(intent, session):
     """ Sets the color in the session and prepares the speech to reply to the
     user.
     """
-
+    global temperature
     card_title = intent['name']
-    session_attributes = getAttributes(intent, session)
-    should_end_session = False
+    session_attributes = {}
+    should_end_session = True
 
     if 'temperature' in intent['slots']:
-        temperature = intent['slots']['temperature']['value']
+        if 'value' not in intent['slots']['temperature']:
+            speech_output = "I'm having trouble hearing you right now"
+            return build_response(session_attributes, build_speechlet_response(
+            card_title, speech_output, None, False))
+        else:
+            temperature = intent['slots']['temperature']['value']
         if int(temperature) < 90:
             if int(temperature) > 50:
                 session_attributes["temperature"] = temperature
-                speech_output = "I will now change the temperature to " + \
+                speech_output = "Changing the temperature to " + \
                                 temperature + " degrees."
-                reprompt_text = speech_output
+                reprompt_text = None
             else:
                 temperature = "50"
                 session_attributes["temperature"] = temperature
                 speech_output = "The minimum temperature allowed is" \
-                " 50 degrees. I will now change the temperature to " + \
+                " 50 degrees. Changing the temperature to " + \
                             temperature + " degrees."
-                reprompt_text = speech_output
+                reprompt_text = None
         else:
             temperature = "90"
             session_attributes["temperature"] = temperature
             speech_output = "The maximum temperature allowed is"\
-            " 90 degrees. I will now change the temperature to " + \
+            " 90 degrees. Changing the temperature to " + \
                         temperature + " degrees."
-            reprompt_text = speech_output
+            reprompt_text = None
     else:
         speech_output = "I'm not sure what you are asking. " \
                         "Please try again."
@@ -146,20 +152,19 @@ def lightsIntent(intent, session):
     """
 
     card_title = intent['name']
-    session_attributes = getAttributes(intent, session)
-    should_end_session = False
+    session_attributes = {}
+    should_end_session = True
 
     if 'power' in intent['slots']:
         power = intent['slots']['power']['value']
         session_attributes["power"] = power
-        speech_output = "I am now turning the lights " + \
+        speech_output = "Turning the lights " + \
                         power + "."
-        reprompt_text = speech_output
+        reprompt_text = None
     else:
         speech_output = "I'm not sure what you are asking. " \
                         "Please try again."
-        reprompt_text = "I'm not sure what you are asking. " \
-                        "Please try again."
+        reprompt_text = None
     return build_response(session_attributes, build_speechlet_response(
         card_title, speech_output, reprompt_text, should_end_session))
 
@@ -181,17 +186,17 @@ def getAttributes(intent, session):
     return sessionAttributes
         
 def stateIntent(intent, session):
-    session_attributes = getAttributes(intent, session)
+    global temperature
+    session_attributes = {}
     reprompt_text = None
 
-    if "temperature" in session.get('attributes', {}):
-        temperature = session['attributes']['temperature']
+    if temperature != None:
         speech_output = "Your current temperature is " + temperature + \
                         " degrees."
         should_end_session = True
     else:
         speech_output = "I'm not sure what your current temperature is. " \
-                        "You can ask g t housing to turn it to 67."
+                        "You can ask g t housing to turn it to 67, or something similar."
         should_end_session = False
 
     # Setting reprompt_text to None signifies that we do not want to reprompt
