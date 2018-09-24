@@ -8,10 +8,11 @@
                     "slots": [
                         {
                             "name": "temperature",
-                            "type": "temperature"
+                            "type": "AMAZON.NUMBER"
                         }
                     ],
                     "samples": [
+                        "{temperature}",
                         "change the temperature to {temperature} degrees",
                         "set the temperature to {temperature} degrees",
                         "to go to {temperature} degrees",
@@ -30,6 +31,7 @@
                     "name": "StateIntent",
                     "slots": [],
                     "samples": [
+                        "what temperature it is",
                         "what the temperature is",
                         "what the temperature is set to"
                     ]
@@ -43,6 +45,7 @@
                         }
                     ],
                     "samples": [
+                        "{power}",
                         "to turn {power} the lights",
                         "to turn the lights {power}"
                     ]
@@ -81,316 +84,6 @@
                                 "synonyms": [
                                     "on"
                                 ]
-                            }
-                        }
-                    ]
-                },
-                {
-                    "name": "temperature",
-                    "values": [
-                        {
-                            "name": {
-                                "value": "100"
-                            }
-                        },
-                        {
-                            "name": {
-                                "value": "99"
-                            }
-                        },
-                        {
-                            "name": {
-                                "value": "98"
-                            }
-                        },
-                        {
-                            "name": {
-                                "value": "97"
-                            }
-                        },
-                        {
-                            "name": {
-                                "value": "96"
-                            }
-                        },
-                        {
-                            "name": {
-                                "value": "95"
-                            }
-                        },
-                        {
-                            "name": {
-                                "value": "94"
-                            }
-                        },
-                        {
-                            "name": {
-                                "value": "93"
-                            }
-                        },
-                        {
-                            "name": {
-                                "value": "92"
-                            }
-                        },
-                        {
-                            "name": {
-                                "value": "91"
-                            }
-                        },
-                        {
-                            "name": {
-                                "value": "90"
-                            }
-                        },
-                        {
-                            "name": {
-                                "value": "89"
-                            }
-                        },
-                        {
-                            "name": {
-                                "value": "88"
-                            }
-                        },
-                        {
-                            "name": {
-                                "value": "87"
-                            }
-                        },
-                        {
-                            "name": {
-                                "value": "86"
-                            }
-                        },
-                        {
-                            "name": {
-                                "value": "85"
-                            }
-                        },
-                        {
-                            "name": {
-                                "value": "84"
-                            }
-                        },
-                        {
-                            "name": {
-                                "value": "83"
-                            }
-                        },
-                        {
-                            "name": {
-                                "value": "82"
-                            }
-                        },
-                        {
-                            "name": {
-                                "value": "81"
-                            }
-                        },
-                        {
-                            "name": {
-                                "value": "80"
-                            }
-                        },
-                        {
-                            "name": {
-                                "value": "79"
-                            }
-                        },
-                        {
-                            "name": {
-                                "value": "78"
-                            }
-                        },
-                        {
-                            "name": {
-                                "value": "77"
-                            }
-                        },
-                        {
-                            "name": {
-                                "value": "76"
-                            }
-                        },
-                        {
-                            "name": {
-                                "value": "75"
-                            }
-                        },
-                        {
-                            "name": {
-                                "value": "74"
-                            }
-                        },
-                        {
-                            "name": {
-                                "value": "73"
-                            }
-                        },
-                        {
-                            "name": {
-                                "value": "66"
-                            }
-                        },
-                        {
-                            "name": {
-                                "value": "65"
-                            }
-                        },
-                        {
-                            "name": {
-                                "value": "64"
-                            }
-                        },
-                        {
-                            "name": {
-                                "value": "63"
-                            }
-                        },
-                        {
-                            "name": {
-                                "value": "62"
-                            }
-                        },
-                        {
-                            "name": {
-                                "value": "61"
-                            }
-                        },
-                        {
-                            "name": {
-                                "value": "60"
-                            }
-                        },
-                        {
-                            "name": {
-                                "value": "59"
-                            }
-                        },
-                        {
-                            "name": {
-                                "value": "58"
-                            }
-                        },
-                        {
-                            "name": {
-                                "value": "57"
-                            }
-                        },
-                        {
-                            "name": {
-                                "value": "56"
-                            }
-                        },
-                        {
-                            "name": {
-                                "value": "55"
-                            }
-                        },
-                        {
-                            "name": {
-                                "value": "54"
-                            }
-                        },
-                        {
-                            "name": {
-                                "value": "53"
-                            }
-                        },
-                        {
-                            "name": {
-                                "value": "52"
-                            }
-                        },
-                        {
-                            "name": {
-                                "value": "51"
-                            }
-                        },
-                        {
-                            "name": {
-                                "value": "50"
-                            }
-                        },
-                        {
-                            "name": {
-                                "value": "49"
-                            }
-                        },
-                        {
-                            "name": {
-                                "value": "48"
-                            }
-                        },
-                        {
-                            "name": {
-                                "value": "47"
-                            }
-                        },
-                        {
-                            "name": {
-                                "value": "46"
-                            }
-                        },
-                        {
-                            "name": {
-                                "value": "45"
-                            }
-                        },
-                        {
-                            "name": {
-                                "value": "44"
-                            }
-                        },
-                        {
-                            "name": {
-                                "value": "43"
-                            }
-                        },
-                        {
-                            "name": {
-                                "value": "42"
-                            }
-                        },
-                        {
-                            "name": {
-                                "value": "41"
-                            }
-                        },
-                        {
-                            "name": {
-                                "value": "40"
-                            }
-                        },
-                        {
-                            "name": {
-                                "value": "72"
-                            }
-                        },
-                        {
-                            "name": {
-                                "value": "71"
-                            }
-                        },
-                        {
-                            "name": {
-                                "value": "70"
-                            }
-                        },
-                        {
-                            "name": {
-                                "value": "69"
-                            }
-                        },
-                        {
-                            "name": {
-                                "value": "68"
-                            }
-                        },
-                        {
-                            "name": {
-                                "value": "67"
                             }
                         }
                     ]
