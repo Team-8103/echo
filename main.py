@@ -1,22 +1,25 @@
 from __future__ import print_function
+import boto3
 
-temperature = None
+dynamodb = boto3.resource('dynamodb')
+table = dynamodb.Table('GTHousingHVACandLighting')
 
 def lambda_handler(event, context):
     """ Route the incoming request based on type (LaunchRequest, IntentRequest,
     etc.) The JSON body of the request is provided in the event parameter.
     """
     print("event.session.application.applicationId=" +
-          event['session']['application']['applicationId'])
+        event['session']['application']['applicationId'])
 
     """
     Uncomment this if statement and populate with your skill's application ID to
     prevent someone else from configuring a skill that sends requests to this
     function.
     """
-    # if (event['session']['application']['applicationId'] !=
-    #         "amzn1.echo-sdk-ams.app.[unique-value-here]"):
-    #     raise ValueError("Invalid Application ID")
+    
+    if (event['session']['application']['applicationId'] !=
+            "REDACTED"):
+        raise ValueError("Invalid Application ID")
 
     if event['session']['new']:
         on_session_started({'requestId': event['request']['requestId']},
@@ -66,6 +69,10 @@ def on_intent(intent_request, session):
         return lightsIntent(intent, session)
     elif intent_name == "AMAZON.HelpIntent":
         return get_welcome_response(intent, session)
+    elif intent_name == "AMAZON.CancelIntent":
+        return get_welcome_response(intent, session)
+    elif intent_name == "AMAZON.StopIntent":
+        return get_welcome_response(intent, session)
     else:
         raise ValueError("Invalid intent")
 
@@ -77,6 +84,11 @@ def on_session_ended(session_ended_request, session):
     print("on_session_ended requestId=" + session_ended_request['requestId'] +
           ", sessionId=" + session['sessionId'])
     # add cleanup logic here
+    
+    
+def getHouse():
+    return "NAAN_0506"
+
 
 # --------------- Functions that control the skill's behavior ------------------
 
@@ -90,12 +102,12 @@ def get_welcome_response(intent, session):
     card_title = "Welcome"
     speech_output = "Welcome to Georgia Tech Housing's Alexa Skill. " \
                     "Please tell me what temperature you want this room to be " \
-                    "by saying, change the temperature to 67 " \
+                    "by saying, change the temperature to 72 " \
                     "or something similar."
     # If the user either does not reply to the welcome message or says something
     # that is not understood, they will be prompted again with this text.
     reprompt_text = "Please tell me what temperature you want this room to be " \
-                    "by saying, change the temperature to 67 " \
+                    "by saying, change the temperature to 72 " \
                     "or something similar."
     should_end_session = False
     return build_response(session_attributes, build_speechlet_response(
@@ -106,7 +118,6 @@ def changeIntent(intent, session):
     """ Sets the color in the session and prepares the speech to reply to the
     user.
     """
-    global temperature
     card_title = intent['name']
     session_attributes = {}
     should_end_session = True
@@ -123,6 +134,16 @@ def changeIntent(intent, session):
                 session_attributes["temperature"] = temperature
                 speech_output = "Changing the temperature to " + \
                                 temperature + " degrees."
+                table.update_item(
+                    Key={
+                        "Building_RoomNumber": getHouse()
+                    },
+                    AttributeUpdates={
+                        "HVAC": {
+                            "Action": "PUT", 
+                            "Value": int(temperature)
+                        }
+                    })
                 reprompt_text = None
             else:
                 temperature = "50"
@@ -130,6 +151,16 @@ def changeIntent(intent, session):
                 speech_output = "The minimum temperature allowed is" \
                 " 50 degrees. Changing the temperature to " + \
                             temperature + " degrees."
+                table.update_item(
+                    Key={
+                        "Building_RoomNumber": getHouse()
+                    },
+                    AttributeUpdates={
+                        "HVAC": {
+                            "Action": "PUT", 
+                            "Value": int(temperature)
+                        }
+                    })
                 reprompt_text = None
         else:
             temperature = "90"
@@ -137,6 +168,16 @@ def changeIntent(intent, session):
             speech_output = "The maximum temperature allowed is"\
             " 90 degrees. Changing the temperature to " + \
                         temperature + " degrees."
+            table.update_item(
+                    Key={
+                        "Building_RoomNumber": getHouse()
+                    },
+                    AttributeUpdates={
+                        "HVAC": {
+                            "Action": "PUT", 
+                            "Value": int(temperature)
+                        }
+                    })
             reprompt_text = None
     else:
         speech_output = "I'm not sure what you are asking. " \
@@ -160,6 +201,20 @@ def lightsIntent(intent, session):
         session_attributes["power"] = power
         speech_output = "Turning the lights " + \
                         power + "."
+        if power.lower() == "on":
+            power = True
+        else:
+            power = False
+        table.update_item(
+                    Key={
+                        "Building_RoomNumber": getHouse()
+                    },
+                    AttributeUpdates={
+                        "Lighting": {
+                            "Action": "PUT", 
+                            "Value": power
+                        }
+                    })
         reprompt_text = None
     else:
         speech_output = "I'm not sure what you are asking. " \
@@ -186,12 +241,18 @@ def getAttributes(intent, session):
     return sessionAttributes
         
 def stateIntent(intent, session):
-    global temperature
     session_attributes = {}
     reprompt_text = None
-
+    
+    item = table.get_item(
+        Key={
+            "Building_RoomNumber": getHouse()
+            })
+    
+    temperature = item.get('Item').get('HVAC')
+    
     if temperature != None:
-        speech_output = "Your current temperature is " + temperature + \
+        speech_output = "Your current temperature is " + str(temperature) + \
                         " degrees."
         should_end_session = True
     else:
