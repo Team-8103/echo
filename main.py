@@ -18,7 +18,7 @@ def lambda_handler(event, context):
     """
     
     if (event['session']['application']['applicationId'] !=
-            "REDACTED"):
+            "[REDACTED]"):
         raise ValueError("Invalid Application ID")
 
     if event['session']['new']:
@@ -87,7 +87,13 @@ def on_session_ended(session_ended_request, session):
     
     
 def getHouse():
-    return "NAAN_0506"
+    table2 = dynamodb.Table('GTIDtoRoomNumber')
+    item = table2.get_item(
+        Key={
+            "GTID": "901234567"
+            })
+    room_number = item.get('Item').get('Room_Number')
+    return room_number[:-1]
 
 
 # --------------- Functions that control the skill's behavior ------------------
@@ -97,7 +103,6 @@ def get_welcome_response(intent, session):
     """ If we wanted to initialize the session to have some attributes we could
     add those here
     """
-
     session_attributes = getAttributes(intent, session)
     card_title = "Welcome"
     speech_output = "Welcome to Georgia Tech Housing's Alexa Skill. " \
@@ -265,6 +270,7 @@ def stateIntent(intent, session):
     # understood, the session will end.
     return build_response(session_attributes, build_speechlet_response(
         intent['name'], speech_output, reprompt_text, should_end_session))
+
 
 # --------------- Helpers that build all of the responses ----------------------
 
