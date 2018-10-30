@@ -88,13 +88,24 @@ def on_session_ended(session_ended_request, session):
 
 
 def get_house():
-    table2 = dynamodb.Table('GTIDtoRoomNumber')
-    item = table2.get_item(
-        Key={
-            "GTID": "901234567"
-        })
-    room_number = item.get('Item').get('Room_Number')
-    return room_number[:-1]
+    url = "https://api.gatech.edu/apiv3/central.iam.gted.accounts?api_app_id=housing-alexa1&api_app_password="
+    password = "SOME_PASSWORD" #todo: replace with call to password
+    req_mode = "&api_request_mode=sync&uid="
+    username = "SOME_CALL" #todo: replace with call to username
+    attributes = "&requested_attributes=gtGTID%2CgtCurrentDormResidence"
+    url += password + req_mode + username + attributes
+
+    response = urllib.request.urlopen(url)
+    data = response.read()
+    encoding = response.info().get_content_charset('utf-8')
+
+    #translating data to json format
+    data = json.loads(data.decode(encoding))
+
+    try:
+        return data["api_result_data"]["gtCurrentDormResidence"][0]
+    except:
+        return "error"
 
 
 # --------------- Functions that control the skill's behavior ------------------
