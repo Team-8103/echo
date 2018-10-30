@@ -1,5 +1,7 @@
 from __future__ import print_function
 import boto3
+import urllib.request
+import json
 
 dynamodb = boto3.resource('dynamodb')
 table = dynamodb.Table('GTHousingHVACandLighting')
