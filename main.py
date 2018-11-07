@@ -1,6 +1,6 @@
 from __future__ import print_function
 import boto3
-import urllib.request
+from urllib2 import urlopen
 import json
 
 dynamodb = boto3.resource('dynamodb')
@@ -21,7 +21,7 @@ def lambda_handler(event, context):
     """
 
     if (event['session']['application']['applicationId'] !=
-            "[REDACTED]"):
+            REDACTED):
         raise ValueError("Invalid Application ID")
 
     if event['session']['new']:
@@ -91,18 +91,17 @@ def on_session_ended(session_ended_request, session):
 
 def get_house():
     url = "https://api.gatech.edu/apiv3/central.iam.gted.accounts?api_app_id=housing-alexa1&api_app_password="
-    password = "SOME_PASSWORD" #todo: replace with call to password
+    password = #TODO: replace with call to password
     req_mode = "&api_request_mode=sync&uid="
-    username = "SOME_CALL" #todo: replace with call to username
+    username = #TODO: replace with call to username
     attributes = "&requested_attributes=gtGTID%2CgtCurrentDormResidence"
     url += password + req_mode + username + attributes
 
-    response = urllib.request.urlopen(url)
-    data = response.read()
-    encoding = response.info().get_content_charset('utf-8')
+    response = urlopen(url)
+    data = response.read().decode('UTF-8')
 
     #translating data to json format
-    data = json.loads(data.decode(encoding))
+    data = json.loads(data)
 
     try:
         return data["api_result_data"]["gtCurrentDormResidence"][0]
