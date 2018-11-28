@@ -12,6 +12,8 @@ You can “Ask GT Housing” questions with the Georgia Tech Housing  Skill. Onc
 3. Link Your GT Account
     In the Alexa app, open the menu and go to “Skills”. Then select “Your Skills” in the upper right corner. Open the Georgia Tech Housing skill and tap “Settings” to enter your GT Account username and password and log in. Now, use the app by saying something like, “Alexa, ask GT Housing to turn the temperature to 74 degrees.”
 
+For troubleshooting tips, visit the [Amazon Help Desk](https://www.amazon.com/gp/help/customer/display.html) or [Alexa skills and games](https://www.amazon.com/gp/help/customer/display.html/ref=hp_bc_nav?ie=UTF8&nodeId=202013760).
+
 ### Downloading the Code
 Clone the public repository
 
