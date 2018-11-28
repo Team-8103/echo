@@ -54,14 +54,13 @@ Here are a sample list of commands you can use with the Alexa Skill. For an exha
     * Alexa, ask GT Housing what temperature it is
 
 ## Release Notes
- - [x] Build Alexa Skill
+ - [x] Build backbone of Alexa Skill
  - [x] Intent Schema with utterances [link](intent_schema.json)
  - [x] Find room/building number through GT Buzz API [link](main.py#L92)
  - [ ] Authenticate Georgia Tech users through GT CAS
  - [ ] Connect to the Johnson Controls Metasys Database
-
-* Release 0.82
-    * 
+ - [ ] Have different situations if the user is in a room with a thermostat versus a room with a fan
+ - [ ] Check if a user is living in a Georgia Tech Dorm before trying to change the temperature
 
 ## Authors
 * Aadarsh Padiyath
@@ -71,4 +70,4 @@ Here are a sample list of commands you can use with the Alexa Skill. For an exha
 * Vijay Upadhya
 
 ## Client
-* Malte Weiland
+* Malte Weiland (alte.weiland@housing.gatech.edu)
