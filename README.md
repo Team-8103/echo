@@ -63,14 +63,17 @@ Here are a sample list of commands you can use with the Alexa Skill. For an exha
  - [x] Build backbone of Alexa Skill
  - [x] Intent Schema with utterances [link](intent_schema.json)
  - [x] Find room/building number through GT Buzz API [link](main.py#L92)
- - [ ] Authenticate Georgia Tech users through GT CAS
+ - [x] Authenticate Georgia Tech users through GT CAS
         
-        Currently in contact with [Stephen Garrett](mailto:stephen.garrett@itg.gatech.edu) of OIT's ITG to get this working.
+Currently in contact with [Stephen Garrett](mailto:stephen.garrett@itg.gatech.edu) of OIT's ITG to get this working.
  - [ ] Connect to the Johnson Controls Metasys Database
  - [ ] Have different situations allowed if the user is in a room with a thermostat versus a room with a fan
  - [ ] Check if a user is living in a Georgia Tech Dorm before trying to change the temperature
         
-        If BuzzAPI fails to find the field gtCurrentDormResidence of a user, then they are not a Georgia Tech Housing resident.
+If BuzzAPI fails to find the field gtCurrentDormResidence of a user, then they are not a Georgia Tech Housing resident.
+
+[Known Bugs](https://github.com/Team-8103/echo/issues)
+
 
 ## Authors
 * Aadarsh Padiyath
