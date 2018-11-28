@@ -11,14 +11,12 @@ logger.setLevel(logging.INFO)
 baseServiceUrl = "https://hvac.aws.itg.gatech.edu/auth/login"
 baseCasUrl = "https://login.gatech.edu/cas/"
 
-def get_username(event):
+def auth_lambda_handler(event, context):
     """
+    Lambda handler for authentication.
     Retrieves the username and token from the event data. Will throw an exception
     if the event parameters are invalid or missing.
     @param: event Dictionary of event parameters passed to the lambda function.
-    @return: A dictionary containing 'gtUsername' and 'token' if successful,
-    otherwise returns a dictionary that, when returned by the lambda function,
-    will redirect the user to authenticate themselves.
     """
     _returnUrl = None;
     _ticket = None;
@@ -65,7 +63,7 @@ def get_username(event):
         return _raise_exception("Unable to store token.")
 
     # Return to Alexa
-    return {'gtUsername': gtUsername, 'token': token}
+    return redirect.to_alexa(token, _state, _redirect_uri)
 
 def _raise_exception(message, log_error=True):
     """
@@ -107,8 +105,8 @@ def _write_record(user, token):
     @return: True if successful, false otherwise.
     """
     try:
-        access_key = "AKIAJUH6GWDIONKYCVEQ"
-        secret_key = "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"
+        access_key = "" #TODO: Get access_key
+        secret_key = "" #TODO: Get secret_key
         client = boto3.client('dynamodb',
                               region_name='us-east-1',
                               aws_access_key_id=access_key,
