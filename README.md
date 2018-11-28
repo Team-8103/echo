@@ -24,9 +24,17 @@ Use the package manager [pip](https://pip.pypa.io/en/stable/) to install the dep
 pip install -r requirements.txt
 ```
 
+Need the passcodes to make the code run? Email malte.weiland@housing.gatech.edu
+
 ### Testing your Code
 You can find example Alexa Intents to test the code in the [Amazon Developer Docs](https://developer.amazon.com/docs/custom-skills/request-and-response-json-reference.html).
 
+It is best to run this code in an AWS Lambda Function.
+There are two Lambda Functions that make this skill work:
+Function  | Function Handler | Trigger
+------------- | ------------- | -------------
+[main.py](main.py)  | main.handler | Alexa Skills Kit
+[auth.py](auth.py)  | auth.handler | API Gateway
 
 ## Using the Alexa Skill
 Here are a sample list of commands you can use with the Alexa Skill. For an exhaustive list, checkout [intent_scheme.json](intent_schema.json)
@@ -45,10 +53,14 @@ Here are a sample list of commands you can use with the Alexa Skill. For an exha
     * Alexa, ask GT Housing what temperature it is
 
 ## Release Notes
+ - [x] Build Alexa Skill
  - [x] Intent Schema with utterances [link](intent_schema.json)
  - [x] Find room/building number through GT Buzz API [link](main.py#L92)
  - [ ] Authenticate Georgia Tech users through GT CAS
  - [ ] Connect to the Johnson Controls Metasys Database
+
+* Release 0.82
+    * 
 
 ## Authors
 * Aadarsh Padiyath
@@ -59,6 +71,3 @@ Here are a sample list of commands you can use with the Alexa Skill. For an exha
 
 ## Client
 * Malte Weiland
-
-## License
-This project is licensed under the MIT License - see the [LICENSE.md](LICENSE) file for details
