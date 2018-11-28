@@ -31,6 +31,7 @@ You can find example Alexa Intents to test the code in the [Amazon Developer Doc
 
 It is best to run this code in an AWS Lambda Function.
 There are two Lambda Functions that make this skill work:
+
 Function  | Function Handler | Trigger
 ------------- | ------------- | -------------
 [main.py](main.py)  | main.handler | Alexa Skills Kit
