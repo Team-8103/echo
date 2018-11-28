@@ -12,8 +12,6 @@ You can “Ask GT Housing” questions with the Georgia Tech Housing  Skill. Onc
 3. Link Your GT Account
     In the Alexa app, open the menu and go to “Skills”. Then select “Your Skills” in the upper right corner. Open the Georgia Tech Housing skill and tap “Settings” to enter your GT Account username and password and log in. Now, use the app by saying something like, “Alexa, ask GT Housing to turn the temperature to 74 degrees.”
 
-For troubleshooting tips, visit the [Amazon Help Desk](https://www.amazon.com/gp/help/customer/display.html) or [Alexa skills and games](https://www.amazon.com/gp/help/customer/display.html/ref=hp_bc_nav?ie=UTF8&nodeId=202013760).
-
 ### Downloading the Code
 Clone the public repository
 
@@ -28,6 +26,10 @@ pip install -r requirements.txt
 
 Need the passcodes to make the code run? Email malte.weiland@housing.gatech.edu
 
+Passcodes needed:
+* BuzzAPI -> Used to find user's GT Residence Hall and Room Number
+* AWS Account Public and Secret Key -> Used to send data to the DynamoDB
+
 ### Testing your Code
 You can find example Alexa Intents to test the code in the [Amazon Developer Docs](https://developer.amazon.com/docs/custom-skills/request-and-response-json-reference.html).
 
@@ -40,7 +42,7 @@ Function  | Function Handler | Trigger
 [auth.py](auth.py)  | auth.handler | API Gateway
 
 ## Using the Alexa Skill
-Here are a sample list of commands you can use with the Alexa Skill. For an exhaustive list, checkout [intent_scheme.json](intent_schema.json)
+Here are a sample list of commands you can use with the Alexa Skill. For an exhaustive list, checkout [intent_schema.json](intent_schema.json)
 
 * Change the Temperature
     * Alexa, ask GT Housing to change the temperature to seventy degrees
@@ -60,9 +62,11 @@ Here are a sample list of commands you can use with the Alexa Skill. For an exha
  - [x] Intent Schema with utterances [link](intent_schema.json)
  - [x] Find room/building number through GT Buzz API [link](main.py#L92)
  - [ ] Authenticate Georgia Tech users through GT CAS
+        Currently in contact with [Stephen Garrett](mailto:stephen.garrett@itg.gatech.edu) of OIT's ITG to get this working.
  - [ ] Connect to the Johnson Controls Metasys Database
- - [ ] Have different situations if the user is in a room with a thermostat versus a room with a fan
+ - [ ] Have different situations allowed if the user is in a room with a thermostat versus a room with a fan
  - [ ] Check if a user is living in a Georgia Tech Dorm before trying to change the temperature
+        If BuzzAPI fails to find the field gtCurrentDormResidence of a user, then they are not a Georgia Tech Housing resident.
 
 ## Authors
 * Aadarsh Padiyath
@@ -72,4 +76,4 @@ Here are a sample list of commands you can use with the Alexa Skill. For an exha
 * Vijay Upadhya
 
 ## Client
-* Malte Weiland (alte.weiland@housing.gatech.edu)
+* [Malte Weiland](mailto:malte.weiland@housing.gatech.edu)
