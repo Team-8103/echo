@@ -5,7 +5,8 @@ import json
 
 dynamodb = boto3.resource('dynamodb')
 table = dynamodb.Table('GTHousingHVACandLighting')
-
+auth_table = dynamodb.Table('CasAuthTable')
+username = None
 
 def lambda_handler(event, context):
     """ Route the incoming request based on type (LaunchRequest, IntentRequest,
@@ -21,9 +22,13 @@ def lambda_handler(event, context):
     """
 
     if (event['session']['application']['applicationId'] !=
-            REDACTED):
+            ""):
         raise ValueError("Invalid Application ID")
-
+    global username
+    
+    accessToken = event["context"]["System"]["user"]["accessToken"]
+    username = auth_table.get_item( Key = {'token': accessToken} )["Item"]["gtUsername"]
+    print(username)
     if event['session']['new']:
         on_session_started({'requestId': event['request']['requestId']},
                            event['session'])
@@ -90,10 +95,10 @@ def on_session_ended(session_ended_request, session):
 
 
 def get_house():
+    global username
     url = "https://api.gatech.edu/apiv3/central.iam.gted.accounts?api_app_id=housing-alexa1&api_app_password="
-    password = #TODO: replace with call to password
+    password = "" #TODO: replace with call to password
     req_mode = "&api_request_mode=sync&uid="
-    username = #TODO: replace with call to username
     attributes = "&requested_attributes=gtGTID%2CgtCurrentDormResidence"
     url += password + req_mode + username + attributes
 
@@ -104,6 +109,7 @@ def get_house():
     data = json.loads(data)
 
     try:
+        print(data["api_result_data"]["gtCurrentDormResidence"][0])
         return data["api_result_data"]["gtCurrentDormResidence"][0]
     except:
         return "error"
