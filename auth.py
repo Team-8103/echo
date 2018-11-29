@@ -107,8 +107,8 @@ def write_record(user, token):
     @return: True if successful, false otherwise.
     """
     try:
-        access_key = "AKIAJF273WN5WJ2UIGOA"
-        secret_key = "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"
+        access_key = ""
+        secret_key = ""
         client = boto3.client('dynamodb',
                               region_name='us-east-1',
                               aws_access_key_id=access_key,
